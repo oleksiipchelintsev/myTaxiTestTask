@@ -30,13 +30,13 @@ You should commit into your local git repository and include the commit history 
 
 ## Task 1
  * Write a new Controller for maintaining cars (CRUD).
-   * Decide on your own how the methods should look like.
-   * Entity Car: Should have at least the following characteristics: license_plate, seat_count, convertible, rating, engine_type (electric, gas, ...)
-   * Entity Manufacturer: Decide on your own if you will use a new table or just a string column in the car table.
- * Extend the DriverController to enable drivers to select a car they are driving with.
- * Extend the DriverController to enable drivers to deselect a car.
- * Extend the DriverDo to map the selected car to the driver.
- * Add example data to resources/data.sql
+TRY   * Decide on your own how the methods should look like.
+TRY   * Entity Car: Should have at least the following characteristics: license_plate, seat_count, convertible, rating, engine_type (electric, gas, ...)
+TRY   * Entity Manufacturer: Decide on your own if you will use a new table or just a string column in the car table.
+TRY  * Extend the DriverController to enable drivers to select a car they are driving with.     ???
+TRY  * Extend the DriverController to enable drivers to deselect a car.                         ???
+ * Extend the DriverDo to map the selected car to the driver.                               ???
+ * Add example data to resources/data.sql                                                   ???
 
 ---
 

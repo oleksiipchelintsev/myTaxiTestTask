@@ -1,5 +1,6 @@
 package com.mytaxi.domainobject;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mytaxi.domainvalue.GeoCoordinate;
 import com.mytaxi.domainvalue.OnlineStatus;
 import java.time.ZonedDateTime;
@@ -10,6 +11,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -22,9 +24,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 )
 public class DriverDO
 {
-
     @Id
     @GeneratedValue
+    @JsonProperty
     private Long id;
 
     @Column(nullable = false)
@@ -33,13 +35,16 @@ public class DriverDO
 
     @Column(nullable = false)
     @NotNull(message = "Username can not be null!")
+    @JsonProperty
     private String username;
 
     @Column(nullable = false)
     @NotNull(message = "Password can not be null!")
+    @JsonProperty
     private String password;
 
     @Column(nullable = false)
+    @JsonProperty
     private Boolean deleted = false;
 
     @Embedded
@@ -51,13 +56,25 @@ public class DriverDO
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @JsonProperty
     private OnlineStatus onlineStatus;
+
+    @OneToOne(targetEntity = CarDO.class)
+    @Column(nullable = true)
+    private CarDO carDO;
 
 
     private DriverDO()
     {
     }
 
+    public CarDO getCarDO() {
+        return carDO;
+    }
+
+    public void setCarDO(CarDO carDO) {
+        this.carDO = carDO;
+    }
 
     public DriverDO(String username, String password)
     {

@@ -2,15 +2,21 @@ package com.mytaxi.controller;
 
 import com.mytaxi.controller.mapper.DriverMapper;
 import com.mytaxi.datatransferobject.DriverDTO;
+import com.mytaxi.domainobject.CarDO;
 import com.mytaxi.domainobject.DriverDO;
 import com.mytaxi.domainvalue.OnlineStatus;
+import com.mytaxi.exception.CarAlreadyInUseException;
 import com.mytaxi.exception.ConstraintsViolationException;
+import com.mytaxi.exception.DriverOfflineException;
 import com.mytaxi.exception.EntityNotFoundException;
-import com.mytaxi.service.driver.DriverService;
+import com.mytaxi.service.DriverService;
 import java.util.List;
+import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -78,5 +84,24 @@ public class DriverController
         throws ConstraintsViolationException, EntityNotFoundException
     {
         return DriverMapper.makeDriverDTOList(driverService.find(onlineStatus));
+    }
+
+
+    @PostMapping( value = "/select", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<DriverDO> selectCar(@RequestParam long carId, @RequestParam long driverId) throws EntityNotFoundException, CarAlreadyInUseException, DriverOfflineException {
+        DriverDO savedSpringDriverDO = driverService.selectCar(carId, driverId);
+        if(savedSpringDriverDO != null) {
+            return new ResponseEntity<DriverDO> (savedSpringDriverDO, HttpStatus.OK);
+        }
+        return new ResponseEntity<DriverDO>(HttpStatus.METHOD_NOT_ALLOWED); //Alex, what status?
+    }
+
+    @PostMapping( value = "/deselect", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<DriverDO> deSelectCar(@RequestParam long carId, @RequestParam long driverId) throws EntityNotFoundException, CarAlreadyInUseException, DriverOfflineException {
+        DriverDO savedSpringDriverDO = driverService.deSelectCar(carId, driverId);
+        if(savedSpringDriverDO != null) {
+            return new ResponseEntity<DriverDO> (savedSpringDriverDO, HttpStatus.OK);
+        }
+        return new ResponseEntity<DriverDO>(HttpStatus.METHOD_NOT_ALLOWED);
     }
 }
