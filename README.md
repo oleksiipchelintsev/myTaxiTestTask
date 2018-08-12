@@ -30,13 +30,13 @@ You should commit into your local git repository and include the commit history 
 
 ## Task 1
  * Write a new Controller for maintaining cars (CRUD).
-TRY   * Decide on your own how the methods should look like.
-TRY   * Entity Car: Should have at least the following characteristics: license_plate, seat_count, convertible, rating, engine_type (electric, gas, ...)
-TRY   * Entity Manufacturer: Decide on your own if you will use a new table or just a string column in the car table.
-TRY  * Extend the DriverController to enable drivers to select a car they are driving with.     ???
-TRY  * Extend the DriverController to enable drivers to deselect a car.                         ???
- * Extend the DriverDo to map the selected car to the driver.                               ???
- * Add example data to resources/data.sql                                                   ???
+ * Decide on your own how the methods should look like.
+ * Entity Car: Should have at least the following characteristics: license_plate, seat_count, convertible, rating, engine_type (electric, gas, ...)
+ * Entity Manufacturer: Decide on your own if you will use a new table or just a string column in the car table.
+ * Extend the DriverController to enable drivers to select a car they are driving with.
+ * Extend the DriverController to enable drivers to deselect a car.
+ * Extend the DriverDo to map the selected car to the driver.
+ * Add example data to resources/data.sql
 
 ---
 
@@ -69,4 +69,29 @@ Good luck!
 
 
 
-_NOTE: Please make sure to not submit any personal data with your tests result. Personal data is for example your name, your birth date, email address etc._
+_NOTE: Please make sure to not submit any personal data with your tests result. Personal data is for example your name, your birth date, email address etc.
+
+
+
+
+
+##Task 1. According to the first task, a new controller for maintaining cars has been written. It implements basic operations (CRUD) 
+
+1.1 Firstly the car entity was created. Then the new characteristics were added to it, such as: license_plate, seat_count, convertible, rating, engine_type, carrying_capacity, manufacturer and availability. 
+1.2 For a more practical usage was decided to use a new manufacturer table. It can provide further extension of the manufacturer entity. 
+1.3 The DriverController has been extended to enable drivers to select a car they are driving with. (Method: selectCar in DriverController)
+1.4 The DriverController has been extended to enable drivers to deselect a car. (Method: deSelectCar in DriverController)
+
+## Task 2
+According to the second task a check was made to monitor, if a second driver tried to select an already used car, it would be thrown a CarAlreadyInUseException. Also some exceptions have been added: CarAlreadyInUseException; DriverOfflineException.   
+
+## Task 3
+In order to enable a search for drivers by their attributes as well as car characteristics endpoints have been created ( see: findAllCarsByFilters, findAllCarsByAvailability in CarController, findAllDriversByCarFilters in DriverController). 
+In these controllers is expected the input data in JSON format: then we build SQL query from JSON string, based on its properties (Jackson library was used)
+
+
+Tests to the application are not written. 
+Spring Security is not provided.  
+The application may contain some errors and is not fully completed. 
+I have some thoughts and ideas about this application, but unfortunately I have managed to create only a rough model of it for today. 
+Hopefully, You will take into consideration already made work and understand my general approach to the rest services.

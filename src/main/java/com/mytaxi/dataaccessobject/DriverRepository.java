@@ -5,7 +5,6 @@ import com.mytaxi.domainobject.DriverDO;
 import com.mytaxi.domainvalue.OnlineStatus;
 import java.util.List;
 
-import org.omg.PortableInterceptor.ObjectReferenceFactory;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -20,31 +19,23 @@ public interface DriverRepository extends CrudRepository<DriverDO, Long>
 {
     List<DriverDO> findByOnlineStatus(OnlineStatus onlineStatus);
 
-    //Additional filtering is required once query results are obtained
-    //if multiple attributes are searched at once.
+//    @Query(value = "SELECT  driver.id  FROM driver" +
+//            "INNER JOIN car ON driver.car_id = car.id" +
+//            "WHERE car.availability = false " +
+//            "AND" +
+//            " (car.license_plate = :#{#carDO.licensePlate}" +
+//            " OR car.seat_count = :#{#carDO.seatCount} " +
+//            " OR car.rating = :#{#carDO.rating} " +
+//            " OR car.engine_type  = :#{#carDO.engineType} " +
+//            " OR car.carrying_capacity  = :#{#carDO.carryingCapacity}" +
+//            " OR car.manufacture.id  = :#{#carDO.manufacturer.name} )"
+//            , nativeQuery = true)
+//    List<DriverDO> findDriversByCarAttributesV2(@Param("carDO") final CarDO carDO);
+//
+//
+//    @Query(value = "?", nativeQuery = true)
+//    List<DriverDO> findDriversByCarAttributes(@Param("filterCarQuery") final String filterCarQuery);
 
-    //SELECT drivers.driverID
-    //FROM drivers
-    //INNER JOIN cars ON drivers.carID = cars.carID;
-    //WHERE     cars.license_plate = license_plate
-    //      OR  cars.seat_count = seat_count
-    //      OR  cars.engineType = license_plate
-    //      OR  cars.license_plate = license_plate
-    //      OR  cars.license_plate = license_plate
-    //      OR  cars.license_plate = license_plate
-    //Как это сделать граммотнее      Оно вообще заработает?????
-
-
-
-    //Create myQueryBuilredClass.getQuery(carDO)           //Util
-    @Query(value =  "SELECT d, c FROM CarDO c, DriverDO d " +
-            "WHERE d.carId = c.id AND c.available = true " +
-            "AND " +
-            " (c.seatCount     = :#{#carDO.seatCount}" +
-            " OR c.convertible = :#{#carDO.convertible} " +
-            " OR c.rating = :#{#carDO.rating} " +
-            " OR c.engineType  = :#{#carDO.engineType} " +
-            " OR c.manufacturer.name  = :#{#carDO.manufacturer.name} )"
-    , nativeQuery = true)
-    List<DriverDO> findDriversByCarAttributes(CarDO carDO);
+    @Query(value = ":query", nativeQuery = true)
+    List<DriverDO> findAllDriversByCarFilter(@Param("query") String query);
 }

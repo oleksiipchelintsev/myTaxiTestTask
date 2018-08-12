@@ -1,5 +1,7 @@
 package com.mytaxi.service.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mytaxi.dataaccessobject.CarRepository;
 import com.mytaxi.dataaccessobject.DriverRepository;
 import com.mytaxi.domainobject.CarDO;
@@ -10,9 +12,12 @@ import com.mytaxi.exception.CarAlreadyInUseException;
 import com.mytaxi.exception.ConstraintsViolationException;
 import com.mytaxi.exception.DriverOfflineException;
 import com.mytaxi.exception.EntityNotFoundException;
+
+import java.io.IOException;
 import java.util.List;
 
 import com.mytaxi.service.DriverService;
+import com.mytaxi.util.FilterQueryBuilder;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -160,6 +165,11 @@ public class DefaultDriverService implements DriverService
         return driverDO;
     }
 
+    public List<DriverDO> filterDriverByCar(String jsonFilters) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String query = FilterQueryBuilder.getDriverByCarQueryFromJson(objectMapper.readValue(jsonFilters, JsonNode.class));
+        return driverRepository.findAllDriversByCarFilter(query);
+    }
 
     private DriverDO findDriverChecked(Long driverId) throws EntityNotFoundException
     {

@@ -10,9 +10,13 @@ import com.mytaxi.exception.ConstraintsViolationException;
 import com.mytaxi.exception.DriverOfflineException;
 import com.mytaxi.exception.EntityNotFoundException;
 import com.mytaxi.service.DriverService;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
+
+import com.mytaxi.util.FilterQueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -93,7 +98,7 @@ public class DriverController
         if(savedSpringDriverDO != null) {
             return new ResponseEntity<DriverDO> (savedSpringDriverDO, HttpStatus.OK);
         }
-        return new ResponseEntity<DriverDO>(HttpStatus.METHOD_NOT_ALLOWED); //Alex, what status?
+        return new ResponseEntity<DriverDO>(HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @PostMapping( value = "/deselect", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -103,5 +108,15 @@ public class DriverController
             return new ResponseEntity<DriverDO> (savedSpringDriverDO, HttpStatus.OK);
         }
         return new ResponseEntity<DriverDO>(HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
+    @GetMapping ( path = "/get-by-filters", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    ResponseEntity<List<DriverDO>> findAllDriversByCarFilters(@RequestHeader String jsonFilters) throws IOException {
+        List<DriverDO> driversFromDB = driverService.filterDriverByCar(jsonFilters);
+
+        if(driversFromDB != null) {
+            return new ResponseEntity<List<DriverDO>>(driversFromDB, HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 }
