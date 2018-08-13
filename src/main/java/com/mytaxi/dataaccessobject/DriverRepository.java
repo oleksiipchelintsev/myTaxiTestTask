@@ -8,13 +8,14 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 /**
  * Database Access Object for driver table.
  * <p/>
  */
 
-
+@Repository
 public interface DriverRepository extends CrudRepository<DriverDO, Long>
 {
     List<DriverDO> findByOnlineStatus(OnlineStatus onlineStatus);

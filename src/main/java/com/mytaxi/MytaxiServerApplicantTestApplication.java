@@ -1,5 +1,6 @@
 package com.mytaxi;
 
+import com.mytaxi.config.DataBaseConfig;
 import com.mytaxi.util.LoggingInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,7 +21,7 @@ public class MytaxiServerApplicantTestApplication extends WebMvcConfigurerAdapte
 
     public static void main(String[] args)
     {
-        SpringApplication.run(MytaxiServerApplicantTestApplication.class, args);
+        SpringApplication.run(new Class<?>[] {MytaxiServerApplicantTestApplication.class, DataBaseConfig.class}, args);
     }
 
 
