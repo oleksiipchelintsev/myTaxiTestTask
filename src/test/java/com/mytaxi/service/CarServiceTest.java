@@ -2,6 +2,7 @@ package com.mytaxi.service;
 
 
 import com.mytaxi.MytaxiServerApplicantTestApplication;
+import com.mytaxi.MytaxiServerApplicantTestApplicationTests;
 import com.mytaxi.dataaccessobject.CarRepository;
 import com.mytaxi.dataaccessobject.DriverRepository;
 import com.mytaxi.dataaccessobject.ManufactureRepository;
@@ -10,6 +11,7 @@ import com.mytaxi.domainobject.ManufactureDO;
 import com.mytaxi.domainvalue.EngineType;
 import com.mytaxi.exception.ConstraintsViolationException;
 import com.mytaxi.exception.EntityNotFoundException;
+import com.mytaxi.service.impl.DefaultCarService;
 import static junit.framework.TestCase.assertEquals;
 import org.junit.After;
 import static org.junit.Assert.assertNotNull;
@@ -23,15 +25,20 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
+
 import java.time.ZonedDateTime;
 import java.util.List;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
+
+
+@RunWith(SpringRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 @DataJpaTest
-@EntityScan(basePackages = {"com.mytaxi.dataaccessobject"})
-@ContextConfiguration(classes = {MytaxiServerApplicantTestApplication.class})
-@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
+@EntityScan(basePackages = {"com.mytaxi.domainobject"})
+@ContextConfiguration(classes = MytaxiServerApplicantTestApplication.class)
+//@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 
 public class CarServiceTest {
 
