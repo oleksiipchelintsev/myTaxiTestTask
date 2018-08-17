@@ -88,10 +88,3 @@ According to the second task a check was made to monitor, if a second driver tri
 ## Task 3
 In order to enable a search for drivers by their attributes as well as car characteristics endpoints have been created ( see: findAllCarsByFilters, findAllCarsByAvailability in CarController, findAllDriversByCarFilters in DriverController). 
 In these controllers is expected the input data in JSON format: then we build SQL query from JSON string, based on its properties (Jackson library was used)
-
-
-Tests to the application are not written. 
-Spring Security is not provided.  
-The application may contain some errors and is not fully completed. 
-I have some thoughts and ideas about this application, but unfortunately I have managed to create only a rough model of it for today. 
-Hopefully, You will take into consideration already made work and understand my general approach to the rest services.

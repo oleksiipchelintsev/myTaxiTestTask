@@ -18,6 +18,7 @@ import java.util.List;
 
 import com.mytaxi.service.DriverService;
 import com.mytaxi.util.FilterQueryBuilder;
+import com.mytaxi.util.MapFilterCarDO;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class DefaultDriverService implements DriverService
 {
-
     private static org.slf4j.Logger LOG = LoggerFactory.getLogger(DefaultDriverService.class);
 
     private final DriverRepository driverRepository;
@@ -131,7 +131,6 @@ public class DefaultDriverService implements DriverService
         DriverDO driverDO = driverRepository.findById(driverId).orElseThrow(() -> new EntityNotFoundException("Could not find entity with id: " + driverId));
         if(null != carDO && null !=driverDO  && OnlineStatus.ONLINE.equals(driverDO.getOnlineStatus())){
             if(carDO.getAvailability() && driverDO.getCarDO()==null){
-                //driverDO.getCarDO().setAvailability(true);
                 driverDO.setCarDO(carDO);
                 carDO.setAvailability(false);
             } else {
@@ -167,8 +166,9 @@ public class DefaultDriverService implements DriverService
 
     public List<DriverDO> filterDriverByCar(String jsonFilters) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        String query = FilterQueryBuilder.getDriverByCarQueryFromJson(objectMapper.readValue(jsonFilters, JsonNode.class));
-        return driverRepository.findAllDriversByCarFilter(query);
+        CarDO carDO = FilterQueryBuilder.getBaseCarFilterConditionFromJson(objectMapper.readValue(jsonFilters, JsonNode.class));
+        MapFilterCarDO mapFilterCarDO = new MapFilterCarDO(carDO);
+        return driverRepository.findAllDriversByCarFilter(mapFilterCarDO);
     }
 
     private DriverDO findDriverChecked(Long driverId) throws EntityNotFoundException

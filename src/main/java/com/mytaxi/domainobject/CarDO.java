@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 
 @Entity
@@ -136,5 +137,42 @@ public class CarDO {
 
     public void setManufactureDO(ManufactureDO manufactureDO) {
         this.manufactureDO = manufactureDO;
+    }
+
+    @Override
+    public String toString() {
+        return "CarDO{" +
+                "id=" + id +
+                ", licensePlate='" + licensePlate + '\'' +
+                ", seatCount=" + seatCount +
+                ", convertible=" + convertible +
+                ", rating=" + rating +
+                ", engineType='" + engineType + '\'' +
+                ", dateCreated=" + dateCreated +
+                ", manufacturer=" + manufactureDO +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CarDO carDO = (CarDO) o;
+        return Objects.equals(id, carDO.id) &&
+                Objects.equals(dateCreated, carDO.dateCreated) &&
+                Objects.equals(licensePlate, carDO.licensePlate) &&
+                Objects.equals(seatCount, carDO.seatCount) &&
+                Objects.equals(convertible, carDO.convertible) &&
+                Objects.equals(rating, carDO.rating) &&
+                engineType == carDO.engineType &&
+                Objects.equals(carryingCapacity, carDO.carryingCapacity) &&
+                manufactureDO.equals(carDO.manufactureDO) &&
+                Objects.equals(availability, carDO.availability);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, dateCreated, licensePlate, seatCount, convertible, rating, engineType, carryingCapacity, manufactureDO, availability);
     }
 }

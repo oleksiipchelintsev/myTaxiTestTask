@@ -21,7 +21,7 @@ public class MytaxiServerApplicantTestApplication extends WebMvcConfigurerAdapte
 
     public static void main(String[] args)
     {
-        SpringApplication.run(new Class<?>[] {MytaxiServerApplicantTestApplication.class, DataBaseConfig.class}, args);
+        SpringApplication.run(MytaxiServerApplicantTestApplication.class, args);
     }
 
 

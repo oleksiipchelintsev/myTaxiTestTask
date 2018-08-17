@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name="manufacture")
@@ -25,7 +26,7 @@ public class ManufactureDO {
 
     @Column
     @JsonProperty
-    private String name;
+    public String name;
 
     @Column
     @JsonProperty
@@ -62,5 +63,31 @@ public class ManufactureDO {
 
     public void setAdress(String adress) {
         this.adress = adress;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ManufactureDO)) return false;
+        ManufactureDO that = (ManufactureDO) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(dateCreated, that.dateCreated) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(adress, that.adress);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, dateCreated, name, adress);
+    }
+
+    @Override
+    public String toString() {
+        return "ManufactureDO{" +
+                "id=" + id +
+                ", dateCreated=" + dateCreated +
+                ", name='" + name + '\'' +
+                ", adress='" + adress + '\'' +
+                '}';
     }
 }

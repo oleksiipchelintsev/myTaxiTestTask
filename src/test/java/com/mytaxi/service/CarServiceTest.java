@@ -17,6 +17,7 @@ import org.junit.After;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,11 @@ import java.util.List;
 
 
 @RunWith(SpringRunner.class)
+@SpringBootTest
 //@RunWith(SpringJUnit4ClassRunner.class)
-@DataJpaTest
-@EntityScan(basePackages = {"com.mytaxi.domainobject"})
-@ContextConfiguration(classes = MytaxiServerApplicantTestApplication.class)
+//@DataJpaTest
+//@EntityScan(basePackages = {"com.mytaxi.domainobject"})
+//@ContextConfiguration(classes = MytaxiServerApplicantTestApplication.class)
 //@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 
 public class CarServiceTest {
@@ -77,10 +79,8 @@ public class CarServiceTest {
         carDOInDB = carService.save(carDO);
     }
 
-    //
     //List<CarDO> findAllCarsByAvailability(Boolean availability);
     //List<CarDO> findAllCarsByFilters(String jsonFilters) throws IOException;
-    //
 
     @Test
     public void testFindAllByAvailability() {
@@ -93,10 +93,8 @@ public class CarServiceTest {
         assertEquals("BMW", cars.get(0).getManufactureDO().getName());
     }
 
-    //
-    //Alex make here
+    //TODO: Alex implement here
     // List<CarDO> findAllCarsByFilters(String jsonFilters) throws IOException;
-    //
 
     @After
     public void cleanDB() throws EntityNotFoundException {

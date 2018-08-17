@@ -11,6 +11,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -60,7 +61,7 @@ public class DriverDO
     private OnlineStatus onlineStatus;
 
     @OneToOne(targetEntity = CarDO.class)
-    @Column(nullable = true)
+    @JoinColumn(nullable = true)
     private CarDO carDO;
 
 

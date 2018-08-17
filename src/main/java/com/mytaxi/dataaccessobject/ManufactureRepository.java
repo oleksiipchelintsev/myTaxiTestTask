@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-    //@ConditionalOnProperty(value = "feature.car", havingValue = "true")  //Alex what is it?
 public interface ManufactureRepository extends CrudRepository<ManufactureDO, Long> {
-        //ManufactureDO findByName(final String name);
+        ManufactureDO findByName(final String name);
+        ManufactureDO findByAdress(final String name);
 }

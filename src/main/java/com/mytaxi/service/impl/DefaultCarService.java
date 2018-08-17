@@ -8,6 +8,7 @@ import com.mytaxi.exception.ConstraintsViolationException;
 import com.mytaxi.exception.EntityNotFoundException;
 import com.mytaxi.service.CarService;
 import com.mytaxi.util.FilterQueryBuilder;
+import com.mytaxi.util.MapFilterCarDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,8 @@ public class DefaultCarService implements CarService{
 
     @Override
     public CarDO save(CarDO carDO) throws ConstraintsViolationException {
-        if(carRepository.findById(carDO.getId()) == null){
+        System.out.println("DefaultCarService CarDO: " + carDO);
+        if(carDO.getId()==null || !carRepository.findById(carDO.getId()).isPresent()){
             return carRepository.save(carDO);
         }
         return null;
@@ -55,7 +57,8 @@ public class DefaultCarService implements CarService{
     @Override
     public List<CarDO> findAllCarsByFilters(String jsonFilters) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        String query = FilterQueryBuilder.getCarFilterQueryFromJson(objectMapper.readValue(jsonFilters, JsonNode.class));
-        return carRepository.findAllCarsByFilter(query);
+        CarDO carDO = FilterQueryBuilder.getBaseCarFilterConditionFromJson(objectMapper.readValue(jsonFilters, JsonNode.class));
+        MapFilterCarDO mapFilterCarDO = new MapFilterCarDO(carDO);
+        return carRepository.findAllCarsByFilter(mapFilterCarDO);
     }
 }
